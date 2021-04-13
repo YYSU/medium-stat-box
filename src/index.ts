@@ -60,6 +60,7 @@ interface APIResponse {
 
   // Get user's follower count
   const res = await axios.get(MEDIUM_PROFILE_BASE_URL + MEDIUM_USER_NAME);
+  const now = new Date();
   const $ = cheerio.load(res.data);
   const followerCountMatchList= $('a').text().match(FOLLOWERS_COUNT_REGEX);
   followerCount = followerCountMatchList ? followerCountMatchList[0] : '0 Follower';
@@ -78,7 +79,7 @@ interface APIResponse {
   const gistContent = table(
     [
       [`@${MEDIUM_USER_NAME}`, `${followerCount} 🕴`],
-      ['Latest Articles', '👇'],
+      [`${now}: Latest Articles`, '👇'],
       ...articlesContent,
     ],
     { align: ['l', 'r'], stringLength: () => 20 }
